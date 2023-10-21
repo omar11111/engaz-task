@@ -13,6 +13,7 @@ $db = $database->getConnection();
 $item = new Blog($db);
 
 $item->id = isset($_POST['id']) ? $_POST['id'] : die();
+$item->token = isset($_POST['token'])?$_POST['token']:'';
 $item->getSingleBlog();
 $singleBlog = $item->getSingleBlog();
 if (isset($singleBlog['title'])) {

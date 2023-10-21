@@ -4,19 +4,19 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-include_once '../database/database.php';
-include_once '../models/blog.php';
+include_once '../../database/database.php';
+require_once '../../jwt-auth/jwtHandler.php';
+require_once __DIR__ ."/../../Models/user.php";
 $database = new Database();
 $db = $database->getConnection();
-$item = new Blog($db);
+$user = new User($db);
 
 
-$item->title = $_POST['title'];
-$item->description = $_POST['description'];
-$item->token = $_POST['token']??null;
-if($item->createBlog()){
-echo json_encode('Blog created successfully.');
-} else{
-echo json_encode('Blog could not be created.');
+$user->email = $_POST['email'];
+$user->password = $_POST['password'];
+$checkLogin=$user->login();
+if ($checkLogin) {
+    print_r($checkLogin);
+}else{
+    echo json_encode('Check your credentials');
 }
-?>

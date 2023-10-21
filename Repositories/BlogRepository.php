@@ -25,8 +25,11 @@ class BlogRepository
     }
 
     // CREATE
-    public function createBlog($title, $description)
+    public function createBlog($title, $description,$token)
     {
+        if(!$token){
+            return false;
+        }
         // sanitize
         $title = htmlspecialchars(strip_tags($title));
         $description = htmlspecialchars(strip_tags($description));
@@ -57,8 +60,13 @@ class BlogRepository
         return $dataRow;
     }
 
-    public function updateBlog($id, $title, $description)
+    public function updateBlog($id, $title,$description,$token)
     {
+       
+        if(empty($token)){
+            return false;
+        }
+
         $title = htmlspecialchars(strip_tags($title));
         $description = htmlspecialchars(strip_tags($description));
         $updated_at = date('Y-m-d H:i:s');
@@ -76,8 +84,11 @@ class BlogRepository
         return false;
     }
 
-    function deleteBlog($id)
+    function deleteBlog($id,$token)
     {
+        if(empty($token)){
+            return false;
+        }
         $deleted_at = date('Y-m-d H:i:s');
         $sqlQuery = "UPDATE " . $this->db_table . " SET deleted_at = '" . $deleted_at . "'
         WHERE id = " . $id;

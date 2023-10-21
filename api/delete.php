@@ -13,7 +13,10 @@ $db = $database->getConnection();
 $item = new Blog($db);
 
 $item->id = isset($_POST['id']) ? $_POST['id'] : die();
+$item->token = isset($_POST['token'])?$_POST['token']:'';
+
 $singleBlog=$item->getSingleBlog();
+
 if($singleBlog){
 if ($singleBlog['deleted_at'] == "") {
     if ($item->deleteBlog()) {

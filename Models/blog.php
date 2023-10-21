@@ -10,6 +10,7 @@ public $description;
 public $updated_at;
 public $created_at;
 public $deleted_at;
+public $token;
 public $result;
     public function __construct($db)
     {
@@ -28,17 +29,17 @@ public $result;
 
     public function createBlog()
     {
-        return $this->repository->createBlog($this->title, $this->description);
+        return $this->repository->createBlog($this->title, $this->description,$this->token);
     }
 
     public function updateBlog()
     {
-        return $this->repository->updateBlog($this->id, $this->title, $this->description);
+        return $this->repository->updateBlog($this->id, $this->title, $this->description,$this->token);
     }
 
     public function deleteBlog()
     {
-        return $this->repository->deleteBlog($this->id);
+        return $this->repository->deleteBlog($this->id,$this->token);
     }
 
 }
