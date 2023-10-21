@@ -4,21 +4,21 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-include_once '../database.php';
-include_once '../blogs.php';
+include_once '../database/database.php';
+include_once '../models/blog.php';
 $database = new Database();
 $db = $database->getConnection();
 $item = new Blog($db);
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
-$item->getSingleBlog();
-if($item->title != null){
+$singleBlog =$item->getSingleBlog();
+if($singleBlog['title'] != null){
 
 // create array
 $blog_arr = array(
-"id" => $item->id,
-"title" => $item->title,
-"description" => $item->description,
-"created_at" => $item->created_at
+"id" => $singleBlog['id'],
+"title" => $singleBlog['title'],
+"description" => $singleBlog['description'],
+"created_at" => $singleBlog['created_at']
 );
 
 http_response_code(200);
